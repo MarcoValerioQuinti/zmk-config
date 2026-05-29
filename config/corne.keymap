@@ -12,8 +12,8 @@
 #define BASE_WIN 0
 #define SYM      1
 #define NUM      2
-#define ACC      4
 #define NAV      3
+#define ACC      4
 #define BASE_MAC 5
 
 /* =============================================================
@@ -123,6 +123,25 @@
                         >;
                 };
 
+        // ┌──────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬──────┐
+        // │  F1  │ F2 │ F3 │ F4 │ F5 │              │ F6 │ F7 │ F8 │ F9 │ F10  │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │ F11  │F12 │    │    │    │              │ ←  │ ↓  │ ↑  │ →  │ MCTG │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │BTCLR │BT0 │BT1 │BT2 │BT3 │              │HOME│PGDN│PGUP│END │      │
+        // └──────┴────┴────┴────┴────┘              └────┴────┴────┴────┴──────┘
+        //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
+        //      │ TAB │ SPACE │ BASE ▶ │  │ ENT  │ BSPC │ HOME │
+        //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
+                nav_layer {
+                        bindings = <
+   &kp  TAB  &kp F1       &kp F2       &kp F3       &kp F4       &kp F5         &kp F6    &kp F7       &kp F8       &kp F9       &kp F10 &kp BSPC
+   &kp LCTRL &kp F11      &kp F12      &trans       &trans       &trans         &kp LEFT  &kp DOWN     &kp UP       &kp RIGHT    &tog BASE_MAC &kp GRAVE
+   &kp LSHFT &bt BT_CLR   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3   &kp HOME  &kp PG_DN    &kp PG_UP    &kp END      &trans &kp TILDE
+                                       &kp TAB      &kp SPACE    &to BASE_WIN   &kp RET   &kp BSPC     &to BASE_WIN
+                        >;
+                };
+
         // Posizioni mnemoniche QWERTY: W=é E=è A=à  U=ù I=ì O=ò
         // ┌────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬────┐
         // │    │ é  │ è  │    │    │              │    │ ù  │ ì  │ ò  │    │
@@ -140,25 +159,6 @@
    &kp LCTRL &it_a_grv    &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp GRAVE
    &kp LSHFT &trans       &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp TILDE
                                        &kp TAB      &kp SPACE    &none          &kp RET   &kp BSPC     &to BASE_WIN
-                        >;
-                };
-
-        // ┌──────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬──────┐
-        // │  F1  │ F2 │ F3 │ F4 │ F5 │              │ F6 │ F7 │ F8 │ F9 │ F10  │
-        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
-        // │ F11  │F12 │    │    │    │              │ ←  │ ↓  │ ↑  │ →  │ MCTG │
-        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
-        // │BTCLR │BT0 │BT1 │BT2 │BT3 │              │HOME│PGDN│PGUP│END │      │
-        // └──────┴────┴────┴────┴────┘              └────┴────┴────┴────┴──────┘
-        //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
-        //      │ TAB │ SPACE │ BASE ▶ │  │ ENT  │ BSPC │ HOME │
-        //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
-                nav_layer {
-                        bindings = <
-   &kp  TAB  &kp F1       &kp F2       &kp F3       &kp F4       &kp F5         &kp F6    &kp F7       &kp F8       &kp F9       &kp F10 &kp BSPC
-   &kp LCTRL &kp F11      &kp F12      &trans       &trans       &trans         &kp LEFT  &kp DOWN     &kp UP       &kp RIGHT    &tog BASE_MAC &kp GRAVE
-   &kp LSHFT &bt BT_CLR   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3   &kp HOME  &kp PG_DN    &kp PG_UP    &kp END      &trans &kp TILDE
-                                       &kp TAB      &kp SPACE    &to BASE_WIN   &kp RET   &kp BSPC     &to BASE_WIN
                         >;
                 };
 
