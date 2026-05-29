@@ -139,7 +139,7 @@
    &kp  TAB  &trans       &it_e_acu    &it_e_grv    &trans       &trans         &trans    &it_u_grv    &it_i_grv    &it_o_grv    &trans &kp BSPC
    &kp LCTRL &it_a_grv    &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp GRAVE
    &kp LSHFT &trans       &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp TILDE
-                                       &kp TAB      &kp SPACE    &null          &kp RET   &kp BSPC     &to BASE_WIN
+                                       &kp TAB      &kp SPACE    &none          &kp RET   &kp BSPC     &to BASE_WIN
                         >;
                 };
 
