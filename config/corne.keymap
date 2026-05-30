@@ -271,7 +271,7 @@
                 mac_nav_layer {
                         bindings = <
    &none   &none      &none     &none       &none       &none         &mac_redo &mac_paste   &mac_copy    &mac_cut     &mac_undo     &none
-   &none   &LALT      &LCTRL    &LGUI       &LSHFT      &none         &caps_word  &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT     &none
+   &none   &kp LALT      &kp LCTRL    &kp LGUI       &kp LSHFT      &none         &caps_word  &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT     &none
    &none   &none      &none     &none       &none       &none         &kp INS   &kp HOME     &kp PG_DN    &kp PG_UP    &kp END       &none
                                 &none       &trans      &none         &kp RET   &kp BSPC     &kp DEL
                         >;
@@ -280,7 +280,7 @@
                 win_nav_layer {
                         bindings = <
    &none   &none      &none     &none       &none       &none         &win_redo &win_paste   &win_copy    &win_cut     &win_undo     &none
-   &none   &LALT      &LGUI     &LCTRL      &LSHFT      &none         &caps_word  &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT     &none
+   &none   &kp LALT      &kp LGUI     &kp LCTRL      &kp LSHFT      &none         &caps_word  &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT     &none
    &none   &none      &none     &none       &none       &none         &kp INS   &kp HOME     &kp PG_DN    &kp PG_UP    &kp END       &none
                                 &none       &trans      &none         &kp RET   &kp BSPC     &kp DEL
                         >;
