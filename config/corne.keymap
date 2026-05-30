@@ -7,14 +7,19 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
-#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/pointing.h>
 
-#define BASE_WIN 0
-#define SYM      1
-#define NUM      2
-#define NAV      3
+#define MAC      0
+#define WIN      1
+#define SYM      2
+#define NUM      3
 #define ACC      4
-#define BASE_MAC 5
+#define MED      5
+#define MNAV     6
+#define WNAV     7
+#define MMOU     8
+#define WMOU     9
+#define FUN      10
 
 /* =============================================================
  * MACROS — Accenti italiani (dead key: grave/acute + lettera)
@@ -28,6 +33,88 @@
         it_i_grv: it_i_grv { compatible = "zmk,behavior-macro"; label = "IT_I_GRV"; #binding-cells = <0>; wait-ms = <30>; tap-ms = <30>; bindings = <&kp GRAVE &kp I>; };
         it_o_grv: it_o_grv { compatible = "zmk,behavior-macro"; label = "IT_O_GRV"; #binding-cells = <0>; wait-ms = <30>; tap-ms = <30>; bindings = <&kp GRAVE &kp O>; };
         it_u_grv: it_u_grv { compatible = "zmk,behavior-macro"; label = "IT_U_GRV"; #binding-cells = <0>; wait-ms = <30>; tap-ms = <30>; bindings = <&kp GRAVE &kp U>; };
+        win_copy: win_copy {
+                copatible = "zmk,behavior-macro";
+                label = "WIN_COPY";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LCTRL>, 
+                           <&macro_tap &kp C>, 
+                           <&macro_release &kp LCTRL>;
+        };
+        win_cut: win_cut {
+                copatible = "zmk,behavior-macro";
+                label = "WIN_CUT";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LCTRL>, 
+                           <&macro_tap &kp X>, 
+                           <&macro_release &kp LCTRL>;
+        };
+        win_paste: win_paste {
+                copatible = "zmk,behavior-macro";
+                label = "WIN_PASTE";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LCTRL>, 
+                           <&macro_tap &kp V>, 
+                           <&macro_release &kp LCTRL>;
+        };
+        win_undo: win_undo {
+                copatible = "zmk,behavior-macro";
+                label = "WIN_UNDO";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LCTRL>, 
+                           <&macro_tap &kp Z>, 
+                           <&macro_release &kp LCTRL>;
+        };
+        win_redo: win_redo {
+                copatible = "zmk,behavior-macro";
+                label = "WIN_REDO";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LCTRL>, 
+                           <&macro_tap &kp Y>, 
+                           <&macro_release &kp LCTRL>;
+        };
+        mac_copy: mac_copy {
+                copatible = "zmk,behavior-macro";
+                label = "MAC_COPY";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LGUI>, 
+                           <&macro_tap &kp C>, 
+                           <&macro_release &kp LGUI>;
+        };
+        mac_cut: mac_cut {
+                copatible = "zmk,behavior-macro";
+                label = "MAC_CUT";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LGUI>, 
+                           <&macro_tap &kp X>, 
+                           <&macro_release &kp LGUI>;
+        };
+        mac_paste: mac_paste {
+                copatible = "zmk,behavior-macro";
+                label = "MAC_PASTE";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LGUI>, 
+                           <&macro_tap &kp V>, 
+                           <&macro_release &kp LGUI>;
+        };
+        mac_undo: mac_undo {
+                copatible = "zmk,behavior-macro";
+                label = "MAC_UNDO";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LGUI>, 
+                           <&macro_tap &kp Z>, 
+                           <&macro_release &kp LGUI>;
+        };
+        mac_redo: mac_redo {
+                copatible = "zmk,behavior-macro";
+                label = "MAC_REDO";
+                #binding-cells = <0>;
+                bindings = <&macro_press &kp LGUI>, 
+                           <&macro_press &kp LSHFT>,
+                           <&macro_tap &kp Z>, 
+                           <&macro_release &kp LSHFT>,
+                           <&macro_release &kp LGUI>;
+        };
     };
 
 /* =============================================================
@@ -45,7 +132,7 @@
             bindings = <&kp>, <&kp>;
         };
 
-        bs_layer: backspace_layer {
+        th: backspace_layer {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "balanced";
@@ -72,14 +159,23 @@
         // │ Z  │ X  │ C  │ V  │ B  │              │ N  │ M  │ ,  │ .  │ /  │
         // └────┴────┴────┴────┴────┘              └────┴────┴────┴────┴────┘
         //      ┌─────┬───────────┬────────┐  ┌──────────┬─────┬─────┐
-        //      │ TAB │ SPACE/NUM │ →SYM ▶ │  │ BSPC/ACC │ ENT │ ESC │
+        //      │ ESC │ SPACE.    │  TAB   │  │ RETURN   │ RET │ DEL │
         //      └─────┴───────────┴────────┘  └──────────┴─────┴─────┘
-                base_win_layer {
+                mac_base {
                         bindings = <
-   &kp TAB   &kp Q        &kp W        &kp E        &kp R        &kp T          &kp Y     &kp U        &kp I        &kp O        &kp P    &kp BSPC
-   &kp LCTRL &hm LALT A   &hm LCTRL S  &hm LGUI D  &hm LSHFT F   &kp G          &kp H     &hm RSHFT J  &hm RGUI K   &hm RCTRL L  &hm LALT SEMI &kp SQT
-   &kp LSHFT &kp Z        &kp X        &kp C        &kp V        &kp B          &kp N     &kp M        &kp COMMA    &kp DOT      &kp FSLH &kp ESC
-                                       &kp TAB      &bs_layer 2 SPACE    &to SYM        &kp RET   &bs_layer 4 BSPC     &kp ESC
+   &none   &kp Q        &kp W        &kp E        &kp R        &kp T          &kp Y     &kp U        &kp I        &kp O        &kp P           &none
+   &none   &hm LALT A   &hm LCTRL S   &hm LGUI D  &hm LSHFT F  &kp G          &kp H     &hm RSHFT J  &hm RGUI K  &hm RCTRL L   &hm LALT SEMI   &none
+   &none   &th 10 Z     &kp X        &kp C        &kp V        &kp B          &kp N     &kp M        &kp COMMA    &kp DOT      &kp FSLH        &none
+                                     &th 5 ESC    &th 3 SPACE  &th 2 TAB      &th 8 RET &th 4 BSPC   &th 6 DEL
+                        >;
+                };
+
+                win_base {
+                        bindings = <
+   &none   &kp Q        &kp W        &kp E        &kp R        &kp T          &kp Y     &kp U        &kp I        &kp O        &kp P           &none
+   &none   &hm LALT A   &hm LGUI S   &hm LCTRL D  &hm LSHFT F  &kp G          &kp H     &hm RSHFT J  &hm RCTRL K  &hm RGUI L   &hm LALT SEMI   &none
+   &none   &th 10 Z     &kp X        &kp C        &kp V        &kp B          &kp N     &kp M        &kp COMMA    &kp DOT      &kp FSLH        &none
+                                     &th 5 ESC    &th 3 SPACE  &th 2 TAB      &th 9 RET &th 4 BSPC   &th 7 DEL
                         >;
                 };
 
@@ -96,10 +192,10 @@
 
                 sym_layer {
                         bindings = <
-   &kp TAB    &kp GRAVE    &kp AMPS     &kp CARET    &kp PIPE     &kp TILDE      &kp EXCL  &kp LBKT     &kp RBKT     &kp SQT      &kp DQT &kp BSPC
-   &bt BT_CLR &kp FSLH     &kp STAR     &kp PLUS     &kp COLON    &kp SEMI       &kp UNDER &kp LPAR     &kp RPAR     &kp MINUS    &kp EQUAL &trans
-   &kp LSHFT  &kp PRCNT    &kp HASH     &kp LT       &kp GT       &kp QMARK      &kp BSLH  &kp LBRC     &kp RBRC     &kp AT       &kp DLLR &trans
-                                        &kp TAB      &kp SPACE    &to NAV        &kp RET   &kp BSPC     &to BASE_WIN
+   &none    &kp GRAVE    &kp AMPS     &kp CARET    &kp PIPE     &kp TILDE      &kp EXCL  &kp LBKT     &kp RBKT     &kp SQT      &kp DQT   &none
+   &none    &kp FSLH     &kp STAR     &kp PLUS     &kp COLON    &kp SEMI       &kp UNDER &kp LPAR     &kp RPAR     &kp MINUS    &kp EQUAL &none
+   &none    &kp PRCNT    &kp HASH     &kp LT       &kp GT       &kp QMARK      &kp BSLH  &kp LBRC     &kp RBRC     &kp AT       &kp DLLR  &none
+                                      &kp TAB      &trans       &none          &kp RET   &kp BSPC     &none
                         >;
                 };
 
@@ -107,38 +203,19 @@
         // ┌────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬────┐
         // │    │    │    │    │    │              │ /  │ 7  │ 8  │ 9  │ -  │
         // ├────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼────┤
-        // │    │    │    │    │    │              │ 0  │ 4  │ 5  │ 6  │ +  │
+        // │    │    │    │    │    │              │    │ 4  │ 5  │ 6  │ +  │
         // ├────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼────┤
         // │    │    │    │    │    │              │ .  │ 1  │ 2  │ 3  │ *  │
         // └────┴────┴────┴────┴────┘              └────┴────┴────┴────┴────┘
         //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
-        //      │ TAB │ SPACE │ →NAV ▶ │  │ ENT  │ BSPC │ HOME │
+        //      │     │       │        │  │ RET  │  0   │      │
         //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
                 num_layer {
                         bindings = <
-   &kp  TAB  &trans       &trans       &trans       &trans       &trans         &kp FSLH  &kp N7       &kp N8       &kp N9       &kp MINUS &kp BSPC
-   &kp LCTRL &trans       &trans       &trans       &trans       &trans         &kp N0    &kp N4       &kp N5       &kp N6       &kp PLUS &kp GRAVE
-   &kp LSHFT &trans       &trans       &trans       &trans       &trans         &kp DOT   &kp N1       &kp N2       &kp N3       &kp STAR &kp TILDE
-                                       &kp TAB      &kp SPACE    &to NAV        &kp RET   &kp BSPC     &to BASE_WIN
-                        >;
-                };
-
-        // ┌──────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬──────┐
-        // │  F1  │ F2 │ F3 │ F4 │ F5 │              │ F6 │ F7 │ F8 │ F9 │ F10  │
-        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
-        // │ F11  │F12 │    │    │    │              │ ←  │ ↓  │ ↑  │ →  │ MCTG │
-        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
-        // │BTCLR │BT0 │BT1 │BT2 │BT3 │              │HOME│PGDN│PGUP│END │      │
-        // └──────┴────┴────┴────┴────┘              └────┴────┴────┴────┴──────┘
-        //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
-        //      │ TAB │ SPACE │ BASE ▶ │  │ ENT  │ BSPC │ HOME │
-        //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
-                nav_layer {
-                        bindings = <
-   &kp  TAB  &kp F1       &kp F2       &kp F3       &kp F4       &kp F5         &kp F6    &kp F7       &kp F8       &kp F9       &kp F10 &kp BSPC
-   &kp LCTRL &kp F11      &kp F12      &trans       &trans       &trans         &kp LEFT  &kp DOWN     &kp UP       &kp RIGHT    &tog BASE_MAC &kp GRAVE
-   &kp LSHFT &bt BT_CLR   &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3   &kp HOME  &kp PG_DN    &kp PG_UP    &kp END      &trans &kp TILDE
-                                       &kp TAB      &kp SPACE    &to BASE_WIN   &kp RET   &kp BSPC     &to BASE_WIN
+   &none  &none       &none       &none       &none       &none         &kp FSLH  &kp N7       &kp N8       &kp N9       &kp MINUS &none
+   &none  &none       &none       &none       &none       &none         &kp N0    &kp N4       &kp N5       &kp N6       &kp PLUS  &none
+   &none  &none       &none       &none       &none       &none         &kp DOT   &kp N1       &kp N2       &kp N3       &kp STAR  &none
+                                  &none       &trans      &none         &kp RET   &kp N0       &none
                         >;
                 };
 
@@ -155,24 +232,104 @@
         //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
                 acc_layer {
                         bindings = <
-   &kp  TAB  &trans       &it_e_acu    &it_e_grv    &trans       &trans         &trans    &it_u_grv    &it_i_grv    &it_o_grv    &trans &kp BSPC
-   &kp LCTRL &it_a_grv    &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp GRAVE
-   &kp LSHFT &trans       &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp TILDE
-                                       &kp TAB      &kp SPACE    &none          &kp RET   &kp BSPC     &to BASE_WIN
+   &none  &trans       &it_e_acu    &it_e_grv    &trans       &trans         &trans    &it_u_grv    &it_i_grv    &it_o_grv    &trans &none
+   &none  &it_a_grv    &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &none
+   &none  &trans       &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &none
+                                       &trans       &trans       &trans         &trans    &trans       &trans
                         >;
                 };
 
-                base_mac_layer {
-// -----------------------------------------------------------------------------------------
-// |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BSPC |
-// | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
-// | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
+        // ┌──────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬──────┐
+        // │  F1  │ F2 │ F3 │ F4 │ F5 │              │ F6 │ F7 │ F8 │ F9 │ F10  │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │ F11  │F12 │    │    │    │              │ ←  │ ↓  │ ↑  │ →  │ MCTG │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │BTCLR │BT0 │BT1 │BT2 │BT3 │              │HOME│PGDN│PGUP│END │      │
+        // └──────┴────┴────┴────┴────┘              └────┴────┴────┴────┴──────┘
+        //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
+        //      │ TAB │ SPACE │ BASE ▶ │  │ ENT  │ BSPC │ HOME │
+        //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
+                media_layer {
                         bindings = <
-   &kp  TAB  &trans       &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp BSPC
-   &kp LCTRL &hm LCTRL A  &hm LALT S   &hm LGUI D   &hm LSHFT F  &trans         &trans    &hm RSHFT J  &hm RGUI K   &hm RALT L   &hm RCTRL SEMI &kp GRAVE
-   &kp LSHFT &trans       &trans       &trans       &trans       &trans         &trans    &trans       &trans       &trans       &trans &kp TILDE
-                                       &trans       &trans       &trans         &trans    &trans       &trans
+   &none   &none      &none      &none       &none       &none         &none      &none        &none        &none        &none        &none
+   &none   &none      &none      &none       &none       &none         &none      &kp C_PREV   &kp C_VOL_DN &kp C_VOL_UP &kp C_NEXT   &none
+   &none   &none      &none      &none       &none       &none         &none      &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &none
+                                 &none       &none       &none         &none      &kp C_PP      &kp C_MUTE
+                        >;
+                };
+
+        // ┌──────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬──────┐
+        // │  F1  │ F2 │ F3 │ F4 │ F5 │              │ F6 │ F7 │ F8 │ F9 │ F10  │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │ F11  │F12 │    │    │    │              │ ←  │ ↓  │ ↑  │ →  │ MCTG │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │BTCLR │BT0 │BT1 │BT2 │BT3 │              │HOME│PGDN│PGUP│END │      │
+        // └──────┴────┴────┴────┴────┘              └────┴────┴────┴────┴──────┘
+        //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
+        //      │ TAB │ SPACE │ BASE ▶ │  │ ENT  │ BSPC │ HOME │
+        //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
+                mac_nav_layer {
+                        bindings = <
+   &none   &none      &none     &none       &none       &none         &mac_redo &mac_paste   &mac_copy    &mac_cut     &mac_undo     &none
+   &none   &LALT      &LCTRL    &LGUI       &LSHFT      &none         &kp CAPS  &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT     &none
+   &none   &none      &none     &none       &none       &none         &kp INS   &kp HOME     &kp PG_DN    &kp PG_UP    &kp END       &none
+                                &none       &trans      &none         &kp RET   &kp BSPC     &kp DEL
+                        >;
+                };
+
+                win_nav_layer {
+                        bindings = <
+   &none   &none      &none     &none       &none       &none         &win_redo &win_paste   &win_copy    &win_cut     &win_undo     &none
+   &none   &LALT      &LGUI     &LCTRL      &LSHFT      &none         &kp CAPS  &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT     &none
+   &none   &none      &none     &none       &none       &none         &kp INS   &kp HOME     &kp PG_DN    &kp PG_UP    &kp END       &none
+                                &none       &trans      &none         &kp RET   &kp BSPC     &kp DEL
+                        >;
+                };
+
+        // ┌──────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬──────┐
+        // │  F1  │ F2 │ F3 │ F4 │ F5 │              │ F6 │ F7 │ F8 │ F9 │ F10  │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │ F11  │F12 │    │    │    │              │ ←  │ ↓  │ ↑  │ →  │ MCTG │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │BTCLR │BT0 │BT1 │BT2 │BT3 │              │HOME│PGDN│PGUP│END │      │
+        // └──────┴────┴────┴────┴────┘              └────┴────┴────┴────┴──────┘
+        //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
+        //      │ TAB │ SPACE │ BASE ▶ │  │ ENT  │ BSPC │ HOME │
+        //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
+                mac_mouse_layer {
+                        bindings = <
+   &none   &none      &none      &none       &none       &none         &mac_redo  &mac_paste     &mac_copy      &mac_cut     &mac_undo         &none
+   &none   &LALT      &LCTRL     &LGUI       &LSHFT      &none         &none      &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT   &none
+   &none   &none      &none      &none       &none       &none         &none      &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_UP &msc SCRL_RIGHT   &none
+                                 &none       &none       &trans         &mkp MB2   &mkp MB1       &mkp MB3
+                        >;
+                };
+
+                win_mouse_layer {
+                        bindings = <
+   &none   &none      &none      &none       &none       &none         &win_redo  &win_paste     &win_copy      &win_cut     &win_undo         &none
+   &none   &LALT      &LGUI      &LCTRL      &LSHFT      &none         &none      &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_UP &mmv MOVE_RIGHT   &none
+   &none   &none      &none      &none       &none       &none         &none      &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_UP &msc SCRL_RIGHT   &none
+                                 &none       &none       &trans         &mkp MB2   &mkp MB1       &mkp MB3
+                        >;
+                };
+
+        // ┌──────┬────┬────┬────┬────┐              ┌────┬────┬────┬────┬──────┐
+        // │  F1  │ F2 │ F3 │ F4 │ F5 │              │ F6 │ F7 │ F8 │ F9 │ F10  │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │ F11  │F12 │    │    │    │              │ ←  │ ↓  │ ↑  │ →  │ MCTG │
+        // ├──────┼────┼────┼────┼────┤              ├────┼────┼────┼────┼──────┤
+        // │BTCLR │BT0 │BT1 │BT2 │BT3 │              │HOME│PGDN│PGUP│END │      │
+        // └──────┴────┴────┴────┴────┘              └────┴────┴────┴────┴──────┘
+        //      ┌─────┬───────┬────────┐  ┌──────┬──────┬──────┐
+        //      │ TAB │ SPACE │ BASE ▶ │  │ ENT  │ BSPC │ HOME │
+        //      └─────┴───────┴────────┘  └──────┴──────┴──────┘
+                func_layer {
+                        bindings = <
+   &none   &F1        &F2        &F3         &F4         &F5           &F6        &F7       &F8        &F9       &F10      &none
+   &none   &F11       &F12       &none       &none       &none         &none      &none     &none      &none     &none     &none
+   &trans  &none      &none      &none       &none       &none         &none      &none     &none      &none     &none     &none
+                                 &none       &none       &none         &none      &none     &none
                         >;
                 };
         };
