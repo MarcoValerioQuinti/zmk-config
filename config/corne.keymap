@@ -34,7 +34,7 @@
         it_o_grv: it_o_grv { compatible = "zmk,behavior-macro"; label = "IT_O_GRV"; #binding-cells = <0>; wait-ms = <30>; tap-ms = <30>; bindings = <&kp GRAVE &kp O>; };
         it_u_grv: it_u_grv { compatible = "zmk,behavior-macro"; label = "IT_U_GRV"; #binding-cells = <0>; wait-ms = <30>; tap-ms = <30>; bindings = <&kp GRAVE &kp U>; };
         win_copy: win_copy {
-                copatible = "zmk,behavior-macro";
+                compatible = "zmk,behavior-macro";
                 label = "WIN_COPY";
                 #binding-cells = <0>;
                 bindings = <&macro_press &kp LCTRL>, 
@@ -42,7 +42,7 @@
                            <&macro_release &kp LCTRL>;
         };
         win_cut: win_cut {
-                copatible = "zmk,behavior-macro";
+                compatible = "zmk,behavior-macro";
                 label = "WIN_CUT";
                 #binding-cells = <0>;
                 bindings = <&macro_press &kp LCTRL>, 
@@ -50,7 +50,7 @@
                            <&macro_release &kp LCTRL>;
         };
         win_paste: win_paste {
-                copatible = "zmk,behavior-macro";
+                compatible = "zmk,behavior-macro";
                 label = "WIN_PASTE";
                 #binding-cells = <0>;
                 bindings = <&macro_press &kp LCTRL>, 
@@ -66,7 +66,7 @@
                            <&macro_release &kp LCTRL>;
         };
         win_redo: win_redo {
-                copatible = "zmk,behavior-macro";
+                compatible = "zmk,behavior-macro";
                 label = "WIN_REDO";
                 #binding-cells = <0>;
                 bindings = <&macro_press &kp LCTRL>, 
@@ -74,7 +74,7 @@
                            <&macro_release &kp LCTRL>;
         };
         mac_copy: mac_copy {
-                copatible = "zmk,behavior-macro";
+                compatible = "zmk,behavior-macro";
                 label = "MAC_COPY";
                 #binding-cells = <0>;
                 bindings = <&macro_press &kp LGUI>, 
@@ -98,7 +98,7 @@
                            <&macro_release &kp LGUI>;
         };
         mac_undo: mac_undo {
-                copatible = "zmk,behavior-macro";
+                compatible = "zmk,behavior-macro";
                 label = "MAC_UNDO";
                 #binding-cells = <0>;
                 bindings = <&macro_press &kp LGUI>, 
@@ -106,7 +106,7 @@
                            <&macro_release &kp LGUI>;
         };
         mac_redo: mac_redo {
-                copatible = "zmk,behavior-macro";
+                compatible = "zmk,behavior-macro";
                 label = "MAC_REDO";
                 #binding-cells = <0>;
                 bindings = <&macro_press &kp LGUI>, 
